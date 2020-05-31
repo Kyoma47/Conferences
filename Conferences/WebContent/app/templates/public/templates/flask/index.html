@@ -1,0 +1,223 @@
+{% extends "public/templates/public_template.html" %}
+
+{% block head %}
+<title>Acceuil</title>
+<script type="text/javascript">
+	// Prevent dropdown menu from closing when click inside the form
+	$(document).on("click", ".navbar-right .dropdown-menu", function(e){
+		e.stopPropagation();
+	});
+</script>
+{% endblock %}
+
+{% block acceuil %} class="menu-active" {% endblock %}
+
+{% block nav %}
+<!--
+<li><a href="/">Acceuil</a></li>
+-->
+<li><a href="#hotels">Actualités</a></li>
+<li><a href="#subscribe">Rechercher</a></li>
+<li><a href="#about">A Propos</a></li>
+<li><a href="#venue">Salles</a></li>
+<!-- <li><a href="#gallery">Galerie</a></li>-->
+<li><a href="#supporters">Partenaires</a></li>
+<li><a href="#faq">F.A.Q</a></li>
+<li><a href="#contact">Contacter</a></li>
+{% endblock %}
+
+{% block main %}
+<!--==========================
+  Intro Section
+============================-->
+<section id="intro">
+  <div class="intro-container wow fadeIn">
+    <h1 class="mb-4 pb-0">
+      <span>FST</span> Settat <br>
+      Vous Souhaite La Bienvenue
+    </h1>
+    <p class="mb-4 pb-0">Faculeté des Sciences et Techniques, Settat Maroc</p>
+		<!--
+		<a href="https://www.youtube.com/watch?v=N3L_kPmwCTc" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
+		-->
+		<a href="#about" class="about-btn scrollto">Plus d'informations</a>
+  </div>
+</section>
+
+<!--==========================
+Hotels Section
+============================-->
+<section id="hotels" class="section-with-bg wow fadeInUp">
+  <div class="container">
+    <div class="section-header">
+      <h2>Actualités</h2> <p>Quelques conférences à venir.</p>
+    </div>
+
+    <div class="row">
+      {% for conf in actualite %}
+        <div class="col-lg-4 col-md-6">
+          <div class="hotel">
+            <div class="hotel-img">
+              <a href="conference/{{conf.id}}">
+                <img src="/static/public/img/conferences/{{conf.image}}" alt="image({{conf.image[:-3]}})" class="img-fluid" width="100%" height="100%">
+              </a>
+            </div>
+            <h3><a href="conference/{{conf.id}}">{{conf.titre}}</a></h3>
+
+            <div class="stars">
+              {% for _ in range(conf.note) %} <i class="fa fa-star"></i> {% endfor %}
+              <!-- <i class="fa fa-star-half-full"></i>  -->
+            </div>
+            <p>{{conf.date}}</p>
+          </div>
+        </div>
+      {% endfor %}
+
+
+      <div class="col-lg-4 col-md-6">
+        <br><br><br><br><br>
+        <div class="hotel">
+          <div class="hotel-img">
+            <!--<img src="img/hotels/1.jpg" alt="Hotel 1" class="img-fluid">-->
+          </div>
+          <h3><a href="#">Conferences plus anciennes</a></h3>
+          <div class="stars"></div>
+          <p>afficher plus de résultats.</p>
+        </div>
+      </div>
+    </div><!--end #row-->
+  </div>
+</section>
+
+
+<!--==========================
+Subscribe Section
+============================-->
+<section id="subscribe">
+  <div class="container wow fadeInUp">
+    <div class="section-header">
+      <h2>Nos Conference</h2>
+      <p>rechercher un conference parmi les précedentes editions.</p>
+    </div>
+
+    <form method="POST" action="/">
+      <div class="form-row justify-content-center">
+        <div class="col-auto">
+          <input type="text" class="form-control" name="motCle" placeholder="rechercher une conference">
+        </div>
+        <div class="col-auto">
+          <button type="submit">Rechercher</button>
+        </div>
+      </div>
+    </form>
+
+    <div id="conferences" class="container">
+      <div class="row">
+        {% for conf in resultat %}
+          <div class="col-lg-4 col-md-6">
+            <div class="hotel">
+              <div class="hotel-img">
+								<img src="/static/public/img/conferences/{{conf.image}}" alt="Hotel 1" class="img-fluid" width="100%" height="100%">
+							</div>
+              <h3><a href="/conference/{{i}}">{{conf.titre}}</a></h3>
+              <div class="stars">
+                {% for i in range(conf.note) %} <i class="fa fa-star"></i> {% endfor %} <!-- <i class="fa fa-star-half-full"></i>-->
+              </div>
+              <p style="padding: 0 20px; margin-bottom: 20px; color: #060c22;
+              font-style: italic; font-size: 15px;"> {{conf.date}} </p>
+            </div>
+          </div>
+        {% endfor %}
+			</div>
+			{% if resultat==[] %}
+      <div class="section-header">
+        <h2>Aucun resultat</h2>
+        <p>
+          Pas de resultat pour <strong>"{{motCle}}"</strong>, <br>
+          Veuillez rééssayer pour un autre thème.
+        </p>
+      </div>
+			{% endif %}
+    </div>
+</section>
+
+
+<!--==========================
+  About Section
+============================-->
+<section id="about">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2>A Propos de la FST Settat</h2>
+        <p>
+          Cet établissement est destiné à s’intégrer
+          dans le pôle technologique et industriel
+          des villes de Casablanca, Settat et Berrechid ,
+          pour être,
+          une pépiniére de techniciens et de cadres de haut niveau.
+        </p>
+        <p>
+        Dans l'ère de la technologie numérique et de la digitalisation de la formation.
+        La FSTS lance son nouveau site web.
+        Ce portail est conçu pour vous rapprocher de votre institution,
+        ses composantes, l'organisation des études, les formations dispensées, et les diplômes délivrés.
+        Le site présente de nombreuses nouveautés et offre aux visiteurs notamment les étudiants
+        une expérience améliorée grâce à une navigation simplifiée et une utilisation intuitive
+        </p>
+      </div>
+      <div class="col-lg-3">
+        <h3>Où ?</h3>
+        <p>Université Hassan 1er, Settat</p>
+      </div>
+      <div class="col-lg-3">
+        <h3>Quand ?</h3>
+        <p>Du Lundi au Vendredi<br>de 8h à 18h</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!--==========================
+  Venue Section
+============================-->
+<section id="venue" class="wow fadeInUp">
+  <div class="container-fluid">
+    <div class="section-header">
+      <h2>Nos Salles</h2>
+      <p>Informations et images sur les salles de conferences.</p>
+    </div>
+    <div class="row no-gutters">
+      <div class="col-lg-6 venue-map">
+        <!--src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"-->
+        <iframe
+        src="https://maps.google.com/maps?q=faculet%C3%A9%20sciences%20et%20techniques&t=&z=13&ie=UTF8&iwloc=&output=embed"
+        frameborder="0" style="border:0" allowfullscreen></iframe>
+      </div>
+
+      <div class="col-lg-6 venue-info">
+        <div class="row justify-content-center">
+          <div class="col-11 col-lg-8">
+            <h3>Salle de Conferences, FST Settat</h3>
+            <p>Iste nobis eum sapiente sunt enim dolores labore accusantium autem. Cumque beatae ipsam. Est quae sit qui voluptatem corporis velit. Qui maxime accusamus possimus. Consequatur sequi et ea suscipit enim nesciunt quia velit.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid venue-gallery-container">
+    <div class="row no-gutters">
+      {% for i in range(8) %}
+        <div class="col-lg-3 col-md-4">
+          <div class="venue-gallery">
+            <a href="/static/public/img/venue-gallery/{{i+1}}.jpg" class="venobox" data-gall="venue-gallery">
+              <img src="/static/public/img/venue-gallery/{{i+1}}.jpg" alt="" class="img-fluid">
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

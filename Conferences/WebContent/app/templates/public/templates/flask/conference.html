@@ -1,0 +1,326 @@
+{% extends "public/templates/public_template.html" %}
+
+{% block head %}
+<title>Conference - {{conference.titre}}</title>
+{% endblock %}
+
+
+
+{% block nav %}
+  <li class="menu-active"><a href="#intro">Conference</a></li>
+  {% if conference.finie %}
+    <li><a href="#gallery">Galerie</a></li>
+  {% endif %}
+  <li><a href="#about">Description</a></li>
+  <li><a href="#speakers">Animateurs</a></li>
+  <li><a href="#schedule">Programme</a></li>
+  <li class="buy-tickets"><a href="#buy-tickets">Acheter un Ticket</a></li>
+{% endblock %}
+
+{% block main %}
+<!--==========================
+Intro Section
+============================-->
+<section id="intro" style="background: url(/static/public/img/conferences/{{conference.image}}) top center; background-size: cover;">
+  <div class="intro-container wow fadeIn">
+    <h1 class="mb-4 pb-0"> Titre de la <br><span>Conference</span> </h1>
+    <p class="mb-4 pb-0">{{conference.date}}, Faculeté des Sciences et Technique, Settat Maroc</p>
+    <a href="https://www.youtube.com/watch?v=N3L_kPmwCTc" class="venobox play-btn mb-4" data-vbtype="video"
+    data-autoplay="true"></a>
+    <a href="#about" class="about-btn scrollto">Plus d'Informations</a>
+  </div>
+</section>
+
+
+{% if conference.finie %}
+<!--==========================
+  Gallery Section
+============================-->
+<section id="gallery" class="wow fadeInUp">
+
+  <div class="container">
+    <div class="section-header">
+      <h2>Galerie</h2>
+      <p>Jetez un coup d'oeuil sur notre galerie des anciens événements</p>
+    </div>
+  </div>
+
+  <div class="owl-carousel gallery-carousel">
+    {% for i in range(8) %}
+      <a href="/static/public/img/gallery/{{i+1}}.jpg" class="venobox" data-gall="gallery-carousel">
+        <img src="/static/public/img/gallery/{{i+1}}.jpg" alt="">
+      </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!--==========================
+  About Section
+============================-->
+<section id="about">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2>Description de la Conference</h2> <p>{{conference.description}}</p>
+      </div>
+      <div class="col-lg-3"><h3>Où ?</h3><p>{{conference.lieu}}</p>
+      </div>
+      <div class="col-lg-3">
+        <h3>Quand ?</h3><p>{{conference.jours}}<br>{{conference.heures}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!--==========================
+  Speakers Section
+============================-->
+<section id="speakers" class="wow fadeInUp">
+  <div class="container">
+    <div class="section-header">
+      <h2>Animateurs</h2>
+      <p>
+        Voici les animateurs qui
+        {% if conference.finie %}
+          ont
+        {% else %}
+          vont
+        {% endif %}
+        presenter la conference.
+      </p>
+    </div>
+    <div class="row">
+      {% for anim in conference.animateurs %}
+        <div class="col-lg-4 col-md-6">
+          <div class="speaker" height="100px">
+            <a href="/animateur/{{anim.id}}">
+              <img src="/static/public/img/animateurs/{{anim.image}}" alt="{{anim.image}}" class="img-fluid" width="100%" height="100%">
+            </a>
+            <div class="details">
+              <h3><a href="/animateur/{{anim.id}}">{{anim.nom}} {{anim.prenom}}</a></h3>
+              <p>{{anim.statut}}</p>
+              <div class="social">
+                <a href="{{anim.twitter}}"><i class="fa fa-twitter"></i></a>
+                <a href="{{anim.facebook}}"><i class="fa fa-facebook"></i></a>
+                <a href="{{anim.google_plus}}"><i class="fa fa-google-plus"></i></a>
+                <a href="{{anim.linkedin}}"><i class="fa fa-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+  </div>
+</section>
+
+<!--==========================
+  Schedule Section
+============================-->
+<section id="schedule" class="section-with-bg">
+  <div class="container wow fadeInUp">
+    <div class="section-header">
+      <h2>Programme</h2>
+      <p>Voici notre programme pour la conference</p>
+    </div>
+    <ul class="nav nav-tabs" role="tablist" style="display: flex; justify-content: auto; /*border: solid red 1px;*/">
+      {% for i in range(conference.programme.sessions|length) %}
+        <li class="nav-item" style="margin: auto;">
+          <a class="nav-link {% if i==0 %}active aria-selected='true'{% endif %}"
+          href="#day-{{i+1}}" role="tab" data-toggle="tab">Session {{i+1}}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <h3 class="sub-heading">
+      La conference se déroulenra en {{ conference.programme.sessions|length }} sessions.
+      <br>Choisissez une session pour voir ce qui est prévu.
+    </h3>
+
+    <div class="tab-content row justify-content-center">
+      {% with sessions = conference.programme.sessions %}
+        {% for i in range(sessions|length) %}
+        <div class="col-lg-9 tab-pane fade {% if i==0 %}show active{% endif %}" role="tabpanel" id="day-{{i+1}}">
+          {% for intervention in sessions[i].interventions %}
+            <div class="row schedule-item">
+              <div class="col-md-2"><time>{{intervention.heure}}</time></div>
+              <div class="col-md-10">
+                <div class="speaker">
+                  {% if intervention.animateur!=None %}
+                    <img src="/static/public/img/animateurs/{{intervention.animateur.image}}" alt="{{intervention.animateur.nom}}">
+                  {% endif %}
+                </div>
+                <h4>{{intervention.titre}} <span>{{intervention.animateur.nom}} {{intervention.animateur.prenom}}</span></h4>
+                <p>{{intervention.description}}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      {% endwith %}
+    </div>
+  </div>
+</section>
+
+
+<!--==========================
+  Venue Section
+============================-->
+<!--
+<section id="venue" class="wow fadeInUp">
+  <div class="container-fluid">
+    <div class="section-header">
+      <h2>Nos Salles</h2>
+      <p>Informations et images sur les salles de conferences.</p>
+    </div>
+src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
+    <div class="row no-gutters">
+      <div class="col-lg-6 venue-map">
+        <iframe
+        src="https://maps.google.com/maps?q=faculet%C3%A9%20sciences%20et%20techniques&t=&z=13&ie=UTF8&iwloc=&output=embed"
+        frameborder="0" style="border:0" allowfullscreen></iframe>
+      </div>
+      <div class="col-lg-6 venue-info">
+        <div class="row justify-content-center">
+          <div class="col-11 col-lg-8">
+            <h3>Salle de Conferences, FST Settat</h3>
+            <p>Iste nobis eum sapiente sunt enim dolores labore accusantium autem. Cumque beatae ipsam. Est quae sit qui voluptatem corporis velit. Qui maxime accusamus possimus. Consequatur sequi et ea suscipit enim nesciunt quia velit.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid venue-gallery-container">
+    <div class="row no-gutters">
+      {% for i in range(8) %}
+        <div class="col-lg-3 col-md-4">
+          <div class="venue-gallery">
+            <a href="/static/public/img/venue-gallery/{{i+1}}.jpg" class="venobox" data-gall="venue-gallery">
+              <img src="/static/public/img/venue-gallery/{{i+1}}.jpg" alt="" class="img-fluid">
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+-->
+
+
+<!--==========================
+  Buy Ticket Section
+============================-->
+<section id="buy-tickets" class="section-with-bg wow fadeInUp">
+  <div class="container">
+
+    <div class="section-header">
+      <h2>Acheter un Ticket</h2>
+      <p>Vous pouvez choisir entre les types de tickets suivants :</p>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-5 mb-lg-0">
+          <div class="card-body">
+            <h5 class="card-title text-muted text-uppercase text-center">Access Standard</h5>
+            <h6 class="card-price text-center">{{ conference.prix_standard }} Dhs</h6>
+            <hr>
+            <ul class="fa-ul">
+              <li><span class="fa-li"><i class="fa fa-check"></i></span>Sièges réguliers</li>
+              <li><span class="fa-li"><i class="fa fa-check"></i></span>Pause café</li>
+              <li><span class="fa-li"><i class="fa fa-check"></i></span>Badge personnalisé</li>
+              <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>Accès communautaire</li>
+              <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>Accès à l'atelier</li>
+              <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>Cérémonie de cloture</li>
+            </ul>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn" data-toggle="modal" data-target="#buy-ticket-modal" data-ticket-type="standard-access">Acheter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card mb-5 mb-lg-0">
+          <div class="card-body">
+            <h5 class="card-title text-muted text-uppercase text-center">Access Professionnel</h5>
+            <h6 class="card-price text-center">{{ conference.prix_pro }} Dhs</h6>
+            <hr>
+            <ul class="fa-ul">
+              <li><span class="fa-li"><i class="fa fa-check"></i></span>Sièges réguliers</li>
+              <li><span class="fa-li"><i class="fa fa-check"></i></span>Pause café</li>
+              <li><span class="fa-li"><i class="fa fa-check"></i></span>Badge personnalisé</li>
+              <li><span class="fa-li"><i class="fa fa-check"></i></span>Accès communautaire</li>
+              <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>Accès à l'atelier</li>
+              <li class="text-muted"><span class="fa-li"><i class="fa fa-times"></i></span>Cérémonie de cloture</li>
+            </ul>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn" data-toggle="modal" data-target="#buy-ticket-modal" data-ticket-type="pro-access">Acheter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Pro Tier -->
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title text-muted text-uppercase text-center">Premium Access</h5>
+            <h6 class="card-price text-center">{{ conference.prix_premium }} DH</h6>
+            <hr>
+            <ul class="fa-ul">
+              <li><span class="fa-li"><i class="fa fa-check"></i></span>Sièges réguliers</li>
+              <li><span class="fa-li"><i class="fa fa-check"></i></span>Pause café</li>
+              <li><span class="fa-li"><i class="fa fa-check"></i></span>Badge personnalisé</li>
+              <li><span class="fa-li"><i class="fa fa-check"></i></span>Accès communautaire</li>
+              <li><span class="fa-li"><i class="fa fa-check"></i></span>Accès à l'atelier</li>
+              <li><span class="fa-li"><i class="fa fa-check"></i></span>Cérémonie de cloture</li>
+            </ul>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn" data-toggle="modal" data-target="#buy-ticket-modal" data-ticket-type="premium-access">Acheter</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal Order Form -->
+  <div id="buy-ticket-modal" class="modal fade" height="150%">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Achat d'un Ticket</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="#">
+            <div class="form-group">
+              <input type="text" class="form-control" name="your-name" placeholder="Votre Nom">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="your-email" placeholder="Votre E-mail">
+            </div>
+            <div class="form-group">
+              <select id="ticket-type" name="ticket-type" class="form-control form-control-lg">
+                <option value="">-- Choisissez le type de votre ticket --</option>
+                <option value="standard-access">Access Standard</option>
+                <option value="pro-access">Access Professionnel</option>
+                <option value="premium-access">Access Premium</option>
+              </select>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn">Acheter</button>
+            </div>
+          </form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+</section>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "public/templates/public_template.html" %}
+
+{% block head %}
+<title>Animateur - {{animateur.prenom}} {{animateur.nom}}</title>
+{% endblock %}
+
+
+
+{% block nav %}
+<li><a href="/">Acceuil</a></li>
+<li class="menu-active"><a href="#speakers-details">Animateur</a></li>
+<!--
+<li><a href="#gallery">Galerie</a></li>
+-->
+<li><a href="#supporters">Partenaires</a></li>
+<li><a href="#faq">F.A.Q</a></li>
+<li><a href="#contact">Contacter</a></li>
+{% endblock %}
+
+
+
+
+{% block main %}
+<!--==========================
+  Speaker Details Section
+============================-->
+<br><br><br>
+<section id="speakers-details" class="wow fadeIn">
+  <div class="container">
+    <div class="section-header">
+      <h2>Informations Animateur</h2>
+      <p>Vous trouverez ici quelques informations relatives à l'animateur.</p>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <img src="/static/public/img/animateurs/{{animateur.image}}"
+            alt="{{animateur.nom}} {{animateur.prenom}}" class="img-fluid">
+      </div>
+
+      <div class="col-md-6">
+        <div class="details">
+          <h2>{{animateur.nom}} {{animateur.prenom}}</h2>
+          <div class="social">
+            <a href="{{animateur.twitter}}"><i class="fa fa-twitter"></i></a>
+            <a href="{{animateur.facebook}}"><i class="fa fa-facebook"></i></a>
+            <a href="{{animateur.google_plus}}"><i class="fa fa-google-plus"></i></a>
+            <a href="{{animateur.linkedin}}"><i class="fa fa-linkedin"></i></a>
+          </div>
+          <br>
+          <p>{{animateur.statut}}</p>
+          <br>
+          <p>{{animateur.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
