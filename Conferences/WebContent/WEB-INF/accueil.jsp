@@ -96,8 +96,7 @@
 
               <li class="menu-active" ><a href="/">Acceuil</a></li>
 
-              <li><a href="#hotels">ActualitÃ©s</a></li>
-              <li><a href="#subscribe">Rechercher</a></li>
+              <li><a href="#hotels">Actualités</a></li>              <li><a href="#subscribe">Rechercher</a></li>
               <li><a href="#about">A Propos</a></li>
               <li><a href="#venue">Salles</a></li>
               <!-- <li><a href="#gallery">Galerie</a></li>-->
@@ -160,7 +159,7 @@
         <section id="hotels" class="section-with-bg wow fadeInUp">
           <div class="container">
             <div class="section-header">
-              <h2>ActualitÃ©s</h2> <p>Quelques confÃ©rences Ã  venir.</p>
+              <h2>Actualités</h2> <p>Quelques conférences à venir.</p>
             </div>
 
             <div class="row">
@@ -179,10 +178,10 @@
 		                  </a>
 		                </div>
 		                <h3><a href="conference/<%= c.getIdConference() %>"><%= c.getTitre() %></a></h3>
-		
+
 		                <div class="stars">
 		                	<% for(int i=0; i<c.getNote();i++){ %>
-		                  		<i class="fa fa-star"></i> 
+		                  		<i class="fa fa-star"></i>
 							<%} %>
 		                  <!-- <i class="fa fa-star-half-full"></i>  -->
 		                </div>
@@ -215,7 +214,7 @@
           <div class="container wow fadeInUp">
             <div class="section-header">
               <h2>Nos Conference</h2>
-              <p>rechercher un conference parmi les prÃ©cedentes editions.</p>
+              <p>rechercher un conference parmi les précedentes editions.</p>
             </div>
             <form method="POST" action="RechercherConfernece">
               <div class="form-row justify-content-center">
@@ -272,25 +271,24 @@
         ============================-->
         <section id="about">
           <div class="container">
-            <div class="row">
-              <div class="col-lg-6">
-                <h2>A Propos de la FST Settat</h2>
-                <p>
-                  Cet Ã©tablissement est destinÃ© Ã  sâintÃ©grer
-                  dans le pÃ´le technologique et industriel
-                  des villes de Casablanca, Settat et Berrechid ,
-                  pour Ãªtre,
-                  une pÃ©piniÃ©re de techniciens et de cadres de haut niveau.
-                </p>
-                <p>
-                Dans l'Ã¨re de la technologie numÃ©rique et de la digitalisation de la formation.
-                La FSTS lance son nouveau site web.
-                Ce portail est conÃ§u pour vous rapprocher de votre institution,
-                ses composantes, l'organisation des Ã©tudes, les formations dispensÃ©es, et les diplÃ´mes dÃ©livrÃ©s.
-                Le site prÃ©sente de nombreuses nouveautÃ©s et offre aux visiteurs notamment les Ã©tudiants
-                une expÃ©rience amÃ©liorÃ©e grÃ¢ce Ã  une navigation simplifiÃ©e et une utilisation intuitive
-                </p>
-              </div>
+            <div class="col-lg-6">
+              <h2>A Propos de la FST Settat</h2>
+              <p>
+                Cet établissement est destiné à s’intégrer
+                dans le pôle technologique et industriel
+                des villes de Casablanca, Settat et Berrechid ,
+                pour être,
+                une pépiniére de techniciens et de cadres de haut niveau.
+              </p>
+              <p>
+              Dans l'ère de la technologie numérique et de la digitalisation de la formation.
+              La FSTS lance son nouveau site web.
+              Ce portail est conçu pour vous rapprocher de votre institution,
+              ses composantes, l'organisation des études, les formations dispensées, et les diplômes délivrés.
+              Le site présente de nombreuses nouveautés et offre aux visiteurs notamment les étudiants
+              une expérience améliorée grâce à une navigation simplifiée et une utilisation intuitive
+              </p>
+            </div>
               <div class="col-lg-3">
                 <h3>OÃ¹ ?</h3>
                 <p>UniversitÃ© Hassan 1er, Settat</p>
@@ -356,13 +354,13 @@
             </div>
 
             <div class="row no-gutters supporters-wrap clearfix">
-              {% for i in range(8) %}
-                <div class="col-lg-3 col-md-4 col-xs-6">
-                  <div class="supporter-logo">
-                    <img src="app/static/public/img/supporters/{{i+1}}.png" class="img-fluid" alt="">
-                  </div>
+              <%for(int i=0; i<8; i++){%>
+              <div class="col-lg-3 col-md-4 col-xs-6">
+                <div class="supporter-logo">
+                  <img src="app/static/public/img/supporters/<%=i+1 %>.png" class="img-fluid" alt="">
                 </div>
-              {% endfor %}
+              </div>
+              <%} %>
             </div>
           </div>
         </section>
@@ -380,80 +378,80 @@
 
             <div class="row justify-content-center">
               <div class="col-lg-9">
-                  <ul id="faq-list">
-                    <li>
-                      <a data-toggle="collapse" class="collapsed" href="#faq1">
-                        Faites-vous des parcours pour les non-francophones ?
-                        <i class="fa fa-minus-circle"></i></a>
-                      <div id="faq1" class="collapse" data-parent="#faq-list">
-                        <p>
-                          Oui ! Actuellement, nous avons deux parcours en version anglaise.
-                          Bien sÃ»r, nous pouvons crÃ©er des parcours dans diffÃ©rentes langues en fonction de vos besoins.
-                          Pour un team building, incentive ou tout autre Ã©vÃ©nement dans une autre langue, merci de nous consulter.
-                        </p>
-                      </div>
-                    </li>
+                <ul id="faq-list">
+                  <li>
+                    <a data-toggle="collapse" class="collapsed" href="#faq1">
+                      Faites-vous des parcours pour les non-francophones ?
+                      <i class="fa fa-minus-circle"></i></a>
+                    <div id="faq1" class="collapse" data-parent="#faq-list">
+                      <p>
+                        Oui ! Actuellement, nous avons deux parcours en version anglaise.
+                        Bien sûr, nous pouvons créer des parcours dans différentes langues en fonction de vos besoins.
+                        Pour un team building, incentive ou tout autre événement dans une autre langue, merci de nous consulter.
+                      </p>
+                    </div>
+                  </li>
 
-                    <li>
-                      <a data-toggle="collapse" href="#faq2" class="collapsed">
-                        Si je souhaite faire une pause repas Ã  midi ou en fin de parcours, pouvez-vous vous occuper de la restauration ?
+                  <li>
+                    <a data-toggle="collapse" href="#faq2" class="collapsed">
+                      Si je souhaite faire une pause repas à midi ou en fin de parcours, pouvez-vous vous occuper de la restauration ?
 
-                        <i class="fa fa-minus-circle"></i></a>
-                      <div id="faq2" class="collapse" data-parent="#faq-list">
-                        <p>
-                          Aucun problÃ¨me ! Nous pouvons nous charger de rechercher et de rÃ©server vos lieux de restauration.
-                          Par souci de transparence, nous vous facturerons un forfait pour la recherche et la rÃ©servation,
-                          et vous laisserons le soin de rÃ©gler directement les Ã©tablissements pour les frais de restauration.
-                        </p>
-                      </div>
-                    </li>
+                      <i class="fa fa-minus-circle"></i></a>
+                    <div id="faq2" class="collapse" data-parent="#faq-list">
+                      <p>
+                        Aucun problème ! Nous pouvons nous charger de rechercher et de réserver vos lieux de restauration.
+                        Par souci de transparence, nous vous facturerons un forfait pour la recherche et la réservation,
+                        et vous laisserons le soin de régler directement les établissements pour les frais de restauration.
+                      </p>
+                    </div>
+                  </li>
 
-                    <li>
-                      <a data-toggle="collapse" href="#faq3" class="collapsed">
-                        Pouvez-vous animer notre Ã©vÃ©nement ?
-                        <i class="fa fa-minus-circle"></i></a>
-                      <div id="faq3" class="collapse" data-parent="#faq-list">
-                        <p>
-                          Oui ! Nos formules Original, Premium, et Sur-Mesure intÃ¨grent l'animation du briefing de dÃ©part, de l'arrivÃ©e (classement, remise des prix), et des Ã©ventuelles Ã©preuves animÃ©es.
-                        </p>
-                      </div>
-                    </li>
+                  <li>
+                    <a data-toggle="collapse" href="#faq3" class="collapsed">
+                      Pouvez-vous animer notre événement ?
+                      <i class="fa fa-minus-circle"></i></a>
+                    <div id="faq3" class="collapse" data-parent="#faq-list">
+                      <p>
+                        Oui ! Nos formules Original, Premium, et Sur-Mesure intègrent l'animation du briefing de départ, de l'arrivée (classement, remise des prix), et des éventuelles épreuves animées.
+                      </p>
+                    </div>
+                  </li>
 
-                    <li>
-                      <a data-toggle="collapse" href="#faq4" class="collapsed">
-                        Proposez-vous des parcours pour les personnes Ã  mobilitÃ© rÃ©duite ?
-                        <i class="fa fa-minus-circle"></i></a>
-                      <div id="faq4" class="collapse" data-parent="#faq-list">
-                        <p>
-                          La plupart des Ã©tapes de nos parcours sont accessibles aux personnes Ã  mobilitÃ© rÃ©duite. NÃ©anmoins, consultez-nous pour choisir le parcours le plus adaptÃ©.
-                          Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                        </p>
-                      </div>
-                    </li>
+                  <li>
+                    <a data-toggle="collapse" href="#faq4" class="collapsed">
+                      Proposez-vous des parcours pour les personnes à mobilité réduite ?
+                      <i class="fa fa-minus-circle"></i></a>
+                    <div id="faq4" class="collapse" data-parent="#faq-list">
+                      <p>
+                        La plupart des étapes de nos parcours sont accessibles aux personnes à mobilité réduite. Néanmoins, consultez-nous pour choisir le parcours le plus adapté.
+                        Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
+                      </p>
+                    </div>
+                  </li>
 
-                    <li>
-                      <a data-toggle="collapse" href="#faq5" class="collapsed">
-                        Puis-je organiser mon Ã©vÃ©nement le week-end ?
-                        <i class="fa fa-minus-circle"></i></a>
-                      <div id="faq5" class="collapse" data-parent="#faq-list">
-                        <p>
-                          Bien entendu ! Nous pouvons organiser votre Ã©vÃ©nement un week-end. Il faudra simplement veiller aux horaires et jours d'ouverture dans le choix de votre parcours.
-                        </p>
-                      </div>
-                    </li>
+                  <li>
+                    <a data-toggle="collapse" href="#faq5" class="collapsed">
+                      Puis-je organiser mon événement le week-end ?
+                      <i class="fa fa-minus-circle"></i></a>
+                    <div id="faq5" class="collapse" data-parent="#faq-list">
+                      <p>
+                        Bien entendu ! Nous pouvons organiser votre événement un week-end. Il faudra simplement veiller aux horaires et jours d'ouverture dans le choix de votre parcours.
+                      </p>
+                    </div>
+                  </li>
 
-                    <li>
-                      <a data-toggle="collapse" href="#faq6" class="collapsed">
-                        Est-ce que vous proposez des supports numÃ©riques ?
-                        <i class="fa fa-minus-circle"></i>
-                      </a>
-                      <div id="faq6" class="collapse" data-parent="#faq-list">
-                        <p>
-                          Oui ! Tous nos BaladEnigm existent sur iPhone et Android. Nous pouvons en outre proposer des parcours oÃ¹ vous utiliserez des tablettes numÃ©riques. Pour plus de prÃ©cisions, consultez-nous !
-                        </p>
-                      </div>
-                    </li>
-                  </ul>
+                  <li>
+                    <a data-toggle="collapse" href="#faq6" class="collapsed">
+                      Est-ce que vous proposez des supports numériques ?
+                      <i class="fa fa-minus-circle"></i>
+                    </a>
+                    <div id="faq6" class="collapse" data-parent="#faq-list">
+                      <p>
+                        Oui ! Tous nos BaladEnigm existent sur iPhone et Android. Nous pouvons en outre proposer des parcours où vous utiliserez des tablettes numériques. Pour plus de précisions, consultez-nous !
+                      </p>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -498,7 +496,7 @@
             </div>
 
             <div class="form">
-              <div id="sendmessage">Votre message à  bien étéenvoyés. Merci à  vous!</div>
+              <div id="sendmessage">Votre message à bien été envoyés. Merci à vous!</div>
               <div id="errormessage"></div>
               <form action="SauvegarderMessage" method="post" role="form" class="contactForm">
                 <div class="form-row">
