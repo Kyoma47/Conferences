@@ -143,7 +143,7 @@
               <span>FST</span> Settat <br>
               Vous Souhaite La Bienvenue
             </h1>
-            <p class="mb-4 pb-0">FaculetÃ© des Sciences et Techniques, Settat Maroc</p>
+            <p class="mb-4 pb-0">Faculeté des Sciences et Techniques, Settat Maroc</p>
         		<!--
         		<a href="https://www.youtube.com/watch?v=N3L_kPmwCTc" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
         		-->
