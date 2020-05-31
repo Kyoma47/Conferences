@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="Metier.Conference" %>
+<%@ page import="DAO.ModeleConference" %>
+<%@ page import="java.util.ArrayList" %>
     <!DOCTYPE html>
 
     <html lang="fr">
@@ -161,25 +164,33 @@
             </div>
 
             <div class="row">
-              {% for conf in actualite %}
-                <div class="col-lg-4 col-md-6">
-                  <div class="hotel">
-                    <div class="hotel-img">
-                      <a href="conference/{{conf.id}}">
-                        <img src="app/static/public/img/conferences/{{conf.image}}" alt="image({{conf.image[:-3]}})" class="img-fluid" width="100%" height="100%">
-                      </a>
-                    </div>
-                    <h3><a href="conference/{{conf.id}}">{{conf.titre}}</a></h3>
-
-                    <div class="stars">
-                      {% for _ in range(conf.note) %} <i class="fa fa-star"></i> {% endfor %}
-                      <!-- <i class="fa fa-star-half-full"></i>  -->
-                    </div>
-                    <p>{{conf.date}}</p>
-                  </div>
-                </div>
-              {% endfor %}
-
+              <%if(ModeleConference.getListeConferences().isEmpty()) { %>
+				<p><b><i>Aucun résultat trouvé !</i></b></p>
+			<%
+				}
+				else{
+			%>
+				<%	for(Conference c : ModeleConference.getListeConferences()){ %>
+		            <div class="col-lg-4 col-md-6">
+		              <div class="hotel">
+		                <div class="hotel-img">
+		                  <a href="conference/<%= c.getIdConference() %>">
+		                    <img src="imagesConfAccueil/<%= c.getTitre() %>/mainImage.jpg" alt="image(<%= c.getTitre() %>)" class="img-fluid" width="100%" height="100%">
+		                  </a>
+		                </div>
+		                <h3><a href="conference/<%= c.getIdConference() %>"><%= c.getTitre() %></a></h3>
+		
+		                <div class="stars">
+		                	<% for(int i=0; i<c.getNote();i++){ %>
+		                  		<i class="fa fa-star"></i> 
+							<%} %>
+		                  <!-- <i class="fa fa-star-half-full"></i>  -->
+		                </div>
+		                <p><%= c.getDateDebut() %></p>
+		              </div>
+		            </div>
+		          <% } %>
+		     <% } %>
 
               <div class="col-lg-4 col-md-6">
                 <br><br><br><br><br>
@@ -189,7 +200,7 @@
                   </div>
                   <h3><a href="#">Conferences plus anciennes</a></h3>
                   <div class="stars"></div>
-                  <p>afficher plus de rÃ©sultats.</p>
+                  <p>afficher plus de résultats.</p>
                 </div>
               </div>
             </div><!--end #row-->
@@ -206,45 +217,52 @@
               <h2>Nos Conference</h2>
               <p>rechercher un conference parmi les prÃ©cedentes editions.</p>
             </div>
-
-            <form method="POST" action="/">
+            <form method="POST" action="RechercherConfernece">
               <div class="form-row justify-content-center">
                 <div class="col-auto">
-                  <input type="text" class="form-control" name="motCle" placeholder="rechercher une conference">
+                  <input type="text" class="form-control" name="Keyword" placeholder="rechercher une conference">
                 </div>
                 <div class="col-auto">
-                  <button type="submit">Rechercher</button>
+                  <button type="submit" value="Rechercher">Rechercher</button>
                 </div>
               </div>
             </form>
-
-            <div id="conferences" class="container">
+            <%
+		if(ModeleConference.getRechercheListeConferences().isEmpty() && ModeleConference.getKeyWord()!="") { %>
+			<p><b><i>Aucun résultat trouvé !</i></b></p>
+			<div class="section-header">
+                <h2>Aucun résultat</h2>
+                <p>
+                  Pas de résultat pour <strong><%=ModeleConference.getKeyWord()%></strong>, <br>
+                  Veuillez réessayer pour un autre thème.
+                </p>
+              </div>
+		<%
+			}
+			else{
+		%>
+			 <div id="conferences" class="container">
               <div class="row">
-                {% for conf in resultat %}
+                <%	for(Conference c : ModeleConference.getRechercheListeConferences()){ %>
                   <div class="col-lg-4 col-md-6">
                     <div class="hotel">
                       <div class="hotel-img">
-        								<img src="app/static/public/img/conferences/{{conf.image}}" alt="Hotel 1" class="img-fluid" width="100%" height="100%">
-        							</div>
-                      <h3><a href="/conference/{{i}}">{{conf.titre}}</a></h3>
+        					<img src="imagesConfAccueil/<%= c.getTitre() %>/mainImage.jpg" alt="Hotel 1" class="img-fluid" width="100%" height="100%">
+        			  </div>
+                      <h3><a href="imagesConfAccueil/<%= c.getTitre() %>/mainImage.jpg"><%= c.getTitre() %></a></h3>
                       <div class="stars">
-                        {% for i in range(conf.note) %} <i class="fa fa-star"></i> {% endfor %} <!-- <i class="fa fa-star-half-full"></i>-->
+                        <%for(int i=0; i<c.getNote(); i++){ %>
+                        	<i class="fa fa-star"></i>
+                        <%} %>
                       </div>
                       <p style="padding: 0 20px; margin-bottom: 20px; color: #060c22;
-                      font-style: italic; font-size: 15px;"> {{conf.date}} </p>
+                      font-style: italic; font-size: 15px;"><%= c.getDateDebut() %></p>
                     </div>
                   </div>
-                {% endfor %}
+                <%} %>
         			</div>
-        			{% if resultat==[] %}
-              <div class="section-header">
-                <h2>Aucun resultat</h2>
-                <p>
-                  Pas de resultat pour <strong>"{{motCle}}"</strong>, <br>
-                  Veuillez rÃ©Ã©ssayer pour un autre thÃ¨me.
-                </p>
-              </div>
-        			{% endif %}
+			<% } %>
+
             </div>
         </section>
 
@@ -314,16 +332,16 @@
 
           <div class="container-fluid venue-gallery-container">
             <div class="row no-gutters">
-              {% for i in range(8) %}
-                <div class="col-lg-3 col-md-4">
+             	<%	for(int i=0; i<8; i++){ %>
+					<div class="col-lg-3 col-md-4">
                   <div class="venue-gallery">
-                    <a href="app/static/public/img/venue-gallery/{{i+1}}.jpg" class="venobox" data-gall="venue-gallery">
-                      <img src="app/static/public/img/venue-gallery/{{i+1}}.jpg" alt="" class="img-fluid">
+                    <a href="salles/salle<%=i+1 %>.jpg" class="venobox" data-gall="venue-gallery">
+                      <img src="salles/salle<%=i+1 %>.jpg" alt="" class="img-fluid">
                     </a>
                   </div>
                 </div>
-              {% endfor %}
-            </div>
+				<% } %>
+             </div>
           </div>
         </section>
 
@@ -450,7 +468,7 @@
 
             <div class="section-header">
               <h2>Nous Contacter</h2>
-              <p>N'hÃ©sitez pas Ã  nous contacter pour plus d'informations.</p>
+              <p>N'hésitez pas à  nous contacter pour plus d'informations.</p>
             </div>
 
             <div class="row contact-info">
@@ -480,12 +498,12 @@
             </div>
 
             <div class="form">
-              <div id="sendmessage">Votre message Ã  bien Ã©tÃ© envoyÃ©s. Merci Ã  vous!</div>
+              <div id="sendmessage">Votre message à  bien étéenvoyés. Merci à  vous!</div>
               <div id="errormessage"></div>
-              <form action="/envoyer_message" method="post" role="form" class="contactForm">
+              <form action="SauvegarderMessage" method="post" role="form" class="contactForm">
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <input type="text" name="name" class="form-control" id="name" placeholder="Votre Nom" data-rule="minlen:4" data-msg="Donnez au moins 4 caractÃ¨res." />
+                    <input type="text" name="nom" class="form-control" id="name" placeholder="Votre Nom" data-rule="minlen:4" data-msg="Donnez au moins 4 caractÃ¨res." />
                     <div class="validation"></div>
                   </div>
                   <div class="form-group col-md-6">
@@ -494,7 +512,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" name="subject" id="subject" placeholder="Sujet" data-rule="minlen:4" data-msg="Entrez un sujet de 8 caractÃ¨res au minimum" />
+                  <input type="text" class="form-control" name="sujet" id="subject" placeholder="Sujet" data-rule="minlen:4" data-msg="Entrez un sujet de 8 caractÃ¨res au minimum" />
                   <div class="validation"></div>
                 </div>
                 <div class="form-group">
