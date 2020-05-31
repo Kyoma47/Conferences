@@ -1,14 +1,12 @@
 package Metier;
-import java.util.ArrayList;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="Conferences")
-public class Conference {
+public class Conference{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -25,17 +23,17 @@ public class Conference {
 	private int prixStandard;
 	private int prixPro;
 	private int prixPremium;
+	private int note;
 	
 	@OneToOne(mappedBy = "Conference", cascade = CascadeType.ALL)
 	private Programme Program;
 	
 	//Animateurs : ManyToMany
-	public Conference() {
-	}
+	public Conference() {}
 
 	public Conference(String titre, String sousTitre, String mainImage, Date dateDebut, Date dateFin, String lieu,
 			String lienVideo, String galerie, String description, int prixStandard, int prixPro, int prixPremium,
-			Programme program) {
+			Programme program, int note) {
 		this.titre = titre;
 		this.sousTitre = sousTitre;
 		this.mainImage = mainImage;
@@ -49,6 +47,7 @@ public class Conference {
 		this.prixPro = prixPro;
 		this.prixPremium = prixPremium;
 		Program = program;
+		this.note = note;
 	}
 
 	public int getIdConference() {
@@ -163,4 +162,11 @@ public class Conference {
 		Program = program;
 	}
 
+	public int getNote() {
+		return note;
+	}
+
+	public void setNote(int note) {
+		this.note = note;
+	}
 }

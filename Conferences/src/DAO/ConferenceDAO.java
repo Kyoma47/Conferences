@@ -1,61 +1,56 @@
 package DAO;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import Metier.*;
 
+import Metier.Conference;
 
 public class ConferenceDAO implements DAO<Conference>{
-
-	private EntityManager entityManager;
+	//Attributs
+	EntityManagerFactory entityManagerFactory;
+	EntityManager entityManager;
 	
-	public ConferenceDAO() {
-		EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("PU");
-		entityManager=entityManagerFactory.createEntityManager();
+	//Constructeur
+	public ConferenceDAO() {	
+		entityManagerFactory = Persistence.createEntityManagerFactory("GC");
+		entityManager =  entityManagerFactory.createEntityManager();	
 	}
-	
-	public void Create(Conference c) {
-		EntityTransaction transaction=entityManager.getTransaction();
-		transaction.begin();
-		try {
-		entityManager.persist(c);
-		transaction.commit();
-		}catch(Exception e) {
-			transaction.rollback();
-			e.printStackTrace();
-		}
-	}
-	
-	
-	public void Research(String keyWord){
-		ModeleConference.getListeConferences().clear();
-		//or c.sousTitre like :x
-		Query query=entityManager.createQuery("select c from Conference c where c.titre like :x or c.sousTitre like :x");
-		query.setParameter("x","%"+keyWord+"%");
-		ModeleConference.setListeConferences(query.getResultList());
-	}
-	
-	public void Research(){
+	//M�thodes
+	public void Research() throws SQLException{
 		ModeleConference.getListeConferences().clear();
 		Query requete;
-		if(ModeleConference.getKeyWord().equals("")) {
-			requete = entityManager.createQuery("SELECT c FROM Conference c ORDER BY c.id DESC").setMaxResults(5);
-		}
-		else {
-			requete = entityManager.createQuery("SELECT c FROM Conference c WHERE titre c.like :x or c.sousTitre like :x ORDER BY c.id DESC").setMaxResults(5);
+		requete = entityManager.createQuery("SELECT c FROM Conference c ORDER BY c.id DESC").setMaxResults(5);
+		ModeleConference.setListeConferences((ArrayList<Conference>) requete.getResultList());
+		if(ModeleConference.getKeyWord()!="") {
+			requete = entityManager.createQuery("SELECT c FROM Conference c WHERE c.titre like :x or c.sousTitre like :x ORDER BY c.id DESC");
 			requete.setParameter("x","%" + ModeleConference.getKeyWord() + "%");
+			ModeleConference.setRechercheListeConferences((ArrayList<Conference>) requete.getResultList());
 		}
-		ModeleConference.setListeConferences(requete.getResultList());
+		
 	}
 	
 	public void Research(int id) {
 		ModeleConference.getListeConferences().clear();
 		ModeleConference.getListeConferences().add(entityManager.find(Conference.class, id));
 	}
-	
+	public void Create(Conference c) {
+		EntityTransaction transaction=entityManager.getTransaction();
+		transaction.begin();
+		try {
+			entityManager.persist(c);
+			transaction.commit();
+		}catch(Exception e) {
+			transaction.rollback();
+			e.printStackTrace();
+		}
+	}
+
 	public void Update(Conference c){
 		EntityTransaction transaction=entityManager.getTransaction();
 		transaction.begin();
@@ -81,3 +76,4 @@ public class ConferenceDAO implements DAO<Conference>{
 		}
 	}
 }
+

@@ -1,4 +1,4 @@
-package Vues;
+package servlets_forwarding;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class VersConference
+ * Servlet implementation class VersAnimateur
  */
-@WebServlet("/VersConference")
-public class VersConference extends HttpServlet {
+@WebServlet("/VersAnimateur")
+public class VersAnimateur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VersConference() {
+    public VersAnimateur() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,7 +27,7 @@ public class VersConference extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		this.getServletContext().getRequestDispatcher("/WEB-INF/conference.jsp").forward(request, response);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/animateur.jsp").forward(request, response);
 	}
 
 	/**

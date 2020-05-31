@@ -69,4 +69,11 @@ public class SessionDAO implements DAO<Session> {
 		}
 	}
 
+
+	@Override
+	public void Create(Session obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
